@@ -1,18 +1,23 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
-import { userToken } from "./spotify";
+import { userToken, userInfo } from "./spotify";
 
 function App() {
-  const [token, updateToken] = useState("");
+  const [user, updateUser] = useState("");
 
   useEffect(() => {
-    if (userToken) {
-      updateToken(userToken);
+    if (userToken && userToken !== "undefined") {
+      getUserInfo();
     }
   }, []);
 
-  return token ? (
-    <div className="App">{token}</div>
+  const getUserInfo = async () => {
+    const { data } = await userInfo();
+    updateUser(data);
+  };
+
+  return user ? (
+    <div className="App">{user.email}</div>
   ) : (
     <div>
       <a href="http://localhost:8888/login">Login</a>

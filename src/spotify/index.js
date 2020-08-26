@@ -1,3 +1,5 @@
+import axios from "axios";
+
 export const getHashParams = () => {
   const hashParams = {};
   let e;
@@ -40,3 +42,19 @@ function getToken() {
 }
 
 export const userToken = getToken();
+
+axios.interceptors.request.use(
+  function (config) {
+    const headers = {
+      Authorization: `Bearer ${userToken}`,
+      "Content-Type": "application/json",
+    };
+    config.headers = headers;
+    return config;
+  },
+  function (error) {
+    return Promise.reject(error);
+  }
+);
+
+export const userInfo = () => axios.get("https://api.spotify.com/v1/me");
