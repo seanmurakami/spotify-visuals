@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 import { userToken, userInfo } from "./spotify";
 
+const LOGIN_URI = process.env.NODE_ENV !== "production" ? "http://localhost:8888/login" : "https://spotify-visuals.herokuapp.com/login";
+
 function App() {
   const [user, updateUser] = useState("");
 
@@ -20,7 +22,7 @@ function App() {
     <div className="App">{user.email}</div>
   ) : (
     <div>
-      <a href="http://localhost:8888/login">Login</a>
+      <a href={LOGIN_URI}>Login</a>
     </div>
   );
 }

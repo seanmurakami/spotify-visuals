@@ -18,8 +18,9 @@ const path = require("path");
 
 var client_id = process.env.CLIENT_ID; // Your client id
 var client_secret = process.env.CLIENT_SECRET; // Your secret
-var redirect_uri = process.env.REDIRECT_URI; // Your redirect uri
-var frontend_uri = process.env.FRONTEND_URI;
+var redirect_uri = process.env.REDIRECT_URI || "http://localhost:8888/callback"; // Your redirect uri
+var frontend_uri = process.env.FRONTEND_URI || "http://localhost:3000";
+var port = process.env.PORT || 8888;
 
 /**
  * Generates a random string containing numbers and letters
@@ -28,8 +29,7 @@ var frontend_uri = process.env.FRONTEND_URI;
  */
 var generateRandomString = function (length) {
   var text = "";
-  var possible =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
   for (var i = 0; i < length; i++) {
     text += possible.charAt(Math.floor(Math.random() * possible.length));
@@ -93,9 +93,7 @@ app.get("/callback", function (req, res) {
         grant_type: "authorization_code",
       },
       headers: {
-        Authorization:
-          "Basic " +
-          new Buffer(client_id + ":" + client_secret).toString("base64"),
+        Authorization: "Basic " + new Buffer(client_id + ":" + client_secret).toString("base64"),
       },
       json: true,
     };
@@ -131,9 +129,7 @@ app.get("/refresh_token", function (req, res) {
   var authOptions = {
     url: "https://accounts.spotify.com/api/token",
     headers: {
-      Authorization:
-        "Basic " +
-        new Buffer(client_id + ":" + client_secret).toString("base64"),
+      Authorization: "Basic " + new Buffer(client_id + ":" + client_secret).toString("base64"),
     },
     form: {
       grant_type: "refresh_token",
@@ -152,5 +148,6 @@ app.get("/refresh_token", function (req, res) {
   });
 });
 
-console.log("Listening on 8888");
-app.listen(8888);
+app.listen(port, () => {
+  console.log(`listening on port ${port}`);
+});
