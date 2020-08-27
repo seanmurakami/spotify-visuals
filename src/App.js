@@ -4,7 +4,7 @@ import GlobalStyle from "./styles/GlobalStyles";
 import Login from "./components/Login";
 
 function App() {
-  const [token, updateToken] = useState("");
+  const [token, updateToken] = useState(userToken);
 
   useEffect(() => {
     updateToken(userToken);
