@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { userToken, userInfo } from "./spotify";
+import GlobalStyle from "./styles/GlobalStyles";
 import Login from "./components/Login";
 
 function App() {
@@ -16,7 +17,12 @@ function App() {
     updateUser(data);
   };
 
-  return user ? <div>{user.email}</div> : <Login />;
+  return (
+    <>
+      <GlobalStyle />
+      {user ? <div>{user.email}</div> : <Login />}
+    </>
+  );
 }
 
 export default App;
