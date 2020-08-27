@@ -22,6 +22,7 @@ function getToken() {
 
   if (error) {
     console.error(error);
+    refreshToken(refresh_token);
     return;
   }
 
@@ -39,6 +40,18 @@ function getToken() {
   }
 
   return localAccessToken;
+}
+
+function refreshToken(refresh_token) {
+  try {
+    const { data } = axios.get(`/refresh_token?refresh_token=${refresh_token}`);
+    const newToken = data.access_token;
+    setLocalAccessToken(newToken);
+    window.location.reload();
+    return;
+  } catch (e) {
+    console.error(e);
+  }
 }
 
 export const userToken = getToken();
