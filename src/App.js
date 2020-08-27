@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-import "./App.css";
 import { userToken, userInfo } from "./spotify";
-
-const LOGIN_URI = process.env.NODE_ENV !== "production" ? "http://localhost:8888/login" : "https://spotify-visuals.herokuapp.com/login";
+import GlobalStyle from "./styles/GlobalStyles";
+import Login from "./components/Login";
 
 function App() {
   const [user, updateUser] = useState("");
@@ -18,12 +17,11 @@ function App() {
     updateUser(data);
   };
 
-  return user ? (
-    <div className="App">{user.email}</div>
-  ) : (
-    <div>
-      <a href={LOGIN_URI}>Login</a>
-    </div>
+  return (
+    <>
+      <GlobalStyle />
+      {user ? <div>{user.email}</div> : <Login />}
+    </>
   );
 }
 
