@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { userInfo, userFollowedArtists } from "../spotify";
+import { userInfo, userFollowedArtists, userTopTracks } from "../spotify";
 import styled from "styled-components";
 import Loading from "../components/Loading";
 
@@ -50,13 +50,48 @@ const FollowerCount = styled.div`
   margin-top: 3px;
 `;
 
+const Track = styled.div`
+  display: flex;
+  align-items: center;
+  width: 600px;
+  margin: 10px 0;
+  padding: 0 8px;
+  img {
+    height: 50px;
+    width: 50px;
+    margin-right: 20px;
+  }
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+const TrackTime = styled.div`
+  color: grey;
+  font-size: 12px;
+  margin-top: 3px;
+`;
+
+const Flex = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+`;
+
 function numberWithCommas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+function msToMinutes(ms) {
+  var minutes = Math.floor(ms / 60000);
+  var seconds = ((ms % 60000) / 1000).toFixed(0);
+  return minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
 }
 
 export default () => {
   const [user, updateUser] = useState("");
   const [artists, updateArtists] = useState([]);
+  const [tracks, updateTracks] = useState([]);
 
   useEffect(() => {
     userInfo().then(res => {
@@ -70,24 +105,12 @@ export default () => {
     });
   }, []);
 
-  const renderArtists = () => {
-    return (
-      <div>
-        <h2>Following</h2>
-        {artists.map((artist, i) => {
-          return (
-            <ArtistContainer key={i}>
-              <img src={artist.images[2].url} alt="artist" />
-              <div key={i}>
-                <div>{artist.name}</div>
-                <FollowerCount>{numberWithCommas(artist.followers.total)} FOLLOWERS</FollowerCount>
-              </div>
-            </ArtistContainer>
-          );
-        })}
-      </div>
-    );
-  };
+  useEffect(() => {
+    userTopTracks().then(res => {
+      console.log(res.data);
+      updateTracks(res.data.items);
+    });
+  }, []);
 
   const renderProfile = () => {
     return (
@@ -100,12 +123,53 @@ export default () => {
     );
   };
 
+  const renderArtists = () => {
+    return (
+      <div>
+        <h2>Following</h2>
+        {artists.map((artist, i) => {
+          return (
+            <ArtistContainer key={i}>
+              <img src={artist.images[2].url} alt="artist" />
+              <div>
+                <div>{artist.name}</div>
+                <FollowerCount>{numberWithCommas(artist.followers.total)} FOLLOWERS</FollowerCount>
+              </div>
+            </ArtistContainer>
+          );
+        })}
+      </div>
+    );
+  };
+
+  const renderTracks = () => {
+    return (
+      <div>
+        <h2>Top Tracks</h2>
+        {tracks.map((track, i) => {
+          return (
+            <Track key={i}>
+              <img src={track.album.images[2].url} alt={track.name} />
+              <div>
+                <div>{track.name}</div>
+                <TrackTime>{msToMinutes(track.duration_ms)}</TrackTime>
+              </div>
+            </Track>
+          );
+        })}
+      </div>
+    );
+  };
+
   return (
     <Container>
       {user ? (
         <>
           {renderProfile()}
-          {renderArtists()}
+          <Flex>
+            {renderArtists()}
+            {renderTracks()}
+          </Flex>
         </>
       ) : (
         <Loading />
