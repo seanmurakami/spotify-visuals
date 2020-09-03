@@ -1,15 +1,5 @@
 import axios from "axios";
-
-export const getHashParams = () => {
-  const hashParams = {};
-  let e;
-  const r = /([^&;=]+)=?([^&;]*)/g;
-  const q = window.location.hash.substring(1);
-  while ((e = r.exec(q))) {
-    hashParams[e[1]] = decodeURIComponent(e[2]);
-  }
-  return hashParams;
-};
+import { getHashParams } from "../utils/utilities";
 
 const setLocalAccessToken = token => window.localStorage.setItem("spotify-access-token", token);
 const getLocalAccessToken = () => window.localStorage.getItem("spotify-access-token");
@@ -73,3 +63,5 @@ axios.interceptors.request.use(
 export const userInfo = () => axios.get("https://api.spotify.com/v1/me");
 
 export const userFollowedArtists = () => axios.get("https://api.spotify.com/v1/me/following?type=artist&limit=10");
+
+export const userTopTracks = () => axios.get("https://api.spotify.com/v1/me/top/tracks");
