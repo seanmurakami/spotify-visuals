@@ -72,4 +72,4 @@ axios.interceptors.request.use(
 
 export const userInfo = () => axios.get("https://api.spotify.com/v1/me");
 
-export const userFollowedArtists = () => axios.get("https://api.spotify.com/v1/me/following?type=artist&limit=30");
+export const userFollowedArtists = () => axios.get("https://api.spotify.com/v1/me/following?type=artist&limit=10");
