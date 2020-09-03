@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { userInfo, userFollowedArtists } from "../spotify";
 import styled from "styled-components";
+import Loading from "../components/Loading";
 
 const Container = styled.div`
   max-width: 1000px;
@@ -71,7 +72,7 @@ export default () => {
 
   const renderArtists = () => {
     return (
-      <>
+      <div>
         <h2>Following</h2>
         {artists.map((artist, i) => {
           return (
@@ -84,7 +85,7 @@ export default () => {
             </ArtistContainer>
           );
         })}
-      </>
+      </div>
     );
   };
 
@@ -101,8 +102,14 @@ export default () => {
 
   return (
     <Container>
-      <div>{user && renderProfile()}</div>
-      {renderArtists()}
+      {user ? (
+        <>
+          {renderProfile()}
+          {renderArtists()}
+        </>
+      ) : (
+        <Loading />
+      )}
     </Container>
   );
 };
