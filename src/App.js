@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { userToken } from "./spotify";
 import GlobalStyle from "./styles/GlobalStyles";
 import Login from "./components/Login";
+import Profile from "./components/Profile";
 
 function App() {
   const [token, updateToken] = useState(userToken);
@@ -13,7 +14,7 @@ function App() {
   return (
     <>
       <GlobalStyle />
-      {token ? <div>Hello there</div> : <Login />}
+      {token ? <Profile /> : <Login />}
     </>
   );
 }
