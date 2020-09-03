@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { userInfo, userFollowedArtists, userTopTracks } from "../spotify";
+import { numberWithCommas, msToMinutes } from "../utils/utilities";
 import styled from "styled-components";
 import Loading from "../components/Loading";
 
@@ -77,16 +78,6 @@ const Flex = styled.div`
   width: 100%;
   justify-content: space-between;
 `;
-
-function numberWithCommas(x) {
-  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-}
-
-function msToMinutes(ms) {
-  var minutes = Math.floor(ms / 60000);
-  var seconds = ((ms % 60000) / 1000).toFixed(0);
-  return minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
-}
 
 export default () => {
   const [user, updateUser] = useState("");
