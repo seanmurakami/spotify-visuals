@@ -98,7 +98,6 @@ export default () => {
 
   useEffect(() => {
     userTopTracks().then(res => {
-      console.log(res.data);
       updateTracks(res.data.items);
     });
   }, []);
