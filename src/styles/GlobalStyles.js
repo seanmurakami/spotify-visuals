@@ -12,6 +12,8 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body {
+    background-color: #191414;
+    color: white;
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
     -webkit-font-smoothing: antialiased;
