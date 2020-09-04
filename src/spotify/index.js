@@ -1,14 +1,19 @@
 import axios from "axios";
 import { getHashParams } from "../utils/utilities";
 
-const setLocalAccessToken = token => window.localStorage.setItem("spotify-access-token", token);
+// based on https://github.com/bchiang7/spotify-profile/blob/master/client/src/spotify/index.js setup
+
+const setExpirationTime = () => window.localStorage.setItem("spotify-token-expiration", Date.now());
+const getExpirationTime = () => window.localStorage.getItem("spotify-token-expiration");
+
+const setLocalAccessToken = token => {
+  setExpirationTime();
+  window.localStorage.setItem("spotify-access-token", token);
+};
 const getLocalAccessToken = () => window.localStorage.getItem("spotify-access-token");
 
 const setLocalRefreshToken = token => window.localStorage.setItem("spotify-refresh-token", token);
 const getLocalRefreshToken = () => window.localStorage.getItem("spotify-refresh-token");
-
-const setExpirationTime = () => window.localStorage.setItem("spotify-token-expiration", Date.now());
-const getExpirationTime = () => window.localStorage.getItem("spotify-token-expiration");
 
 function getToken() {
   const { error, access_token, refresh_token } = getHashParams();
@@ -24,8 +29,6 @@ function getToken() {
 
   const localAccessToken = getLocalAccessToken();
   const localRefreshToken = getLocalRefreshToken();
-
-  setExpirationTime();
 
   if (!localRefreshToken || localRefreshToken === "undefined") {
     setLocalRefreshToken(refresh_token);
