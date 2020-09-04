@@ -102,7 +102,7 @@ export default () => {
   const renderProfile = () => {
     return (
       <ProfileContainer>
-        <img src={user.images[0].url} alt="user profile"></img>
+        {user.images.length > 0 && <img src={user.images[0].url} alt="user profile"></img>}
         <div>
           <h1>{user.display_name}</h1>
         </div>
@@ -118,7 +118,7 @@ export default () => {
           artists.map((artist, i) => {
             return (
               <ArtistContainer key={i}>
-                <img src={artist.images[2].url} alt="artist" />
+                <img src={artist.images[0].url} alt="artist" />
                 <div>
                   <div>{artist.name}</div>
                   <FollowerCount>{numberWithCommas(artist.followers.total)} FOLLOWERS</FollowerCount>
