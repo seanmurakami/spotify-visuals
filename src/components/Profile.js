@@ -25,11 +25,11 @@ const ProfileContainer = styled.div`
   }
 `;
 
-const Artists = styled.div`
+const ArtistsContainer = styled.div`
   flex-basis: 40%;
 `;
 
-const ArtistContainer = styled.div`
+const Artist = styled.div`
   border-radius: 10px;
   background-color: #2a2a2a;
   display: flex;
@@ -112,21 +112,21 @@ export default () => {
 
   const renderArtists = () => {
     return (
-      <Artists>
+      <ArtistsContainer>
         <h2>Following</h2>
         {artists &&
           artists.map((artist, i) => {
             return (
-              <ArtistContainer key={i}>
+              <Artist key={i}>
                 <img src={artist.images[0].url} alt="artist" />
                 <div>
                   <div>{artist.name}</div>
                   <FollowerCount>{numberWithCommas(artist.followers.total)} FOLLOWERS</FollowerCount>
                 </div>
-              </ArtistContainer>
+              </Artist>
             );
           })}
-      </Artists>
+      </ArtistsContainer>
     );
   };
 
@@ -138,7 +138,7 @@ export default () => {
           tracks.map((track, i) => {
             return (
               <Track key={i}>
-                <img src={track.album.images[2].url} alt={track.name} />
+                <img src={track.album.images[0].url} alt={track.name} />
                 <div>
                   <div>{track.name}</div>
                   <TrackTime>{msToMinutes(track.duration_ms)}</TrackTime>

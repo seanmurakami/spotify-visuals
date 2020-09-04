@@ -15,18 +15,11 @@ function getToken() {
 
   if (error) {
     console.error(error);
-    refreshToken(refresh_token);
-    return;
+    refreshToken();
   }
 
-  const expirationTime = getExpirationTime();
-  if (expirationTime && expirationTime !== "undefined") {
-    const timeInSeconds = Number(expirationTime) / 1000;
-    const now = Date.now() / 1000;
-    if (now - timeInSeconds > 3600) {
-      refreshToken(refresh_token);
-      return;
-    }
+  if (Date.now() - getExpirationTime() > 3600000) {
+    refreshToken();
   }
 
   const localAccessToken = getLocalAccessToken();
@@ -47,9 +40,9 @@ function getToken() {
   return localAccessToken;
 }
 
-function refreshToken(refresh_token) {
+async function refreshToken() {
   try {
-    const { data } = axios.get(`/refresh_token?refresh_token=${refresh_token}`);
+    const { data } = await axios.get(`/refresh_token?refresh_token=${getLocalRefreshToken()}`);
     const newToken = data.access_token;
     setLocalAccessToken(newToken);
     window.location.reload();
