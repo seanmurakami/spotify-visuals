@@ -3,6 +3,7 @@ import { userInfo, userFollowedArtists, userTopTracks } from "../spotify";
 import { numberWithCommas, msToMinutes } from "../utils/utilities";
 import styled from "styled-components";
 import Loading from "../components/Loading";
+import Axios from "axios";
 
 const Container = styled.div`
   max-width: 1000px;
@@ -83,20 +84,18 @@ const Flex = styled.div`
 `;
 
 export default () => {
-  const [user, updateUser] = useState(null);
-  const [artists, updateArtists] = useState(null);
-  const [tracks, updateTracks] = useState(null);
+  const [user, setUser] = useState(null);
+  const [artists, setArtists] = useState(null);
+  const [tracks, setTracks] = useState(null);
 
   useEffect(() => {
-    userInfo().then(res => {
-      updateUser(res.data);
-    });
-    userFollowedArtists().then(res => {
-      updateArtists(res.data.artists.items);
-    });
-    userTopTracks().then(res => {
-      updateTracks(res.data.items);
-    });
+    Axios.all([userInfo(), userFollowedArtists(), userTopTracks()]).then(
+      Axios.spread((user, followedArtists, tracks) => {
+        setUser(user.data);
+        setArtists(followedArtists.data.artists.items);
+        setTracks(tracks.data.items);
+      })
+    );
   }, []);
 
   const renderProfile = () => {
