@@ -7,6 +7,9 @@ const getLocalAccessToken = () => window.localStorage.getItem("spotify-access-to
 const setLocalRefreshToken = token => window.localStorage.setItem("spotify-refresh-token", token);
 const getLocalRefreshToken = () => window.localStorage.getItem("spotify-refresh-token");
 
+const setExpirationTime = () => window.localStorage.setItem("spotify-token-expiration", Date.now());
+const getExpirationTime = () => window.localStorage.getItem("spotify-token-expiration");
+
 function getToken() {
   const { error, access_token, refresh_token } = getHashParams();
 
@@ -16,8 +19,20 @@ function getToken() {
     return;
   }
 
+  const expirationTime = getExpirationTime();
+  if (expirationTime && expirationTime !== "undefined") {
+    const timeInSeconds = Number(expirationTime) / 1000;
+    const now = Date.now() / 1000;
+    if (now - timeInSeconds > 3600) {
+      refreshToken(refresh_token);
+      return;
+    }
+  }
+
   const localAccessToken = getLocalAccessToken();
   const localRefreshToken = getLocalRefreshToken();
+
+  setExpirationTime();
 
   if (!localRefreshToken || localRefreshToken === "undefined") {
     setLocalRefreshToken(refresh_token);

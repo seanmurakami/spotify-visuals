@@ -25,6 +25,10 @@ const ProfileContainer = styled.div`
   }
 `;
 
+const Artists = styled.div`
+  flex-basis: 40%;
+`;
+
 const ArtistContainer = styled.div`
   border-radius: 10px;
   background-color: #2a2a2a;
@@ -76,27 +80,20 @@ const TrackTime = styled.div`
 const Flex = styled.div`
   display: flex;
   width: 100%;
-  justify-content: space-between;
 `;
 
 export default () => {
-  const [user, updateUser] = useState("");
-  const [artists, updateArtists] = useState([]);
-  const [tracks, updateTracks] = useState([]);
+  const [user, updateUser] = useState(null);
+  const [artists, updateArtists] = useState(null);
+  const [tracks, updateTracks] = useState(null);
 
   useEffect(() => {
     userInfo().then(res => {
       updateUser(res.data);
     });
-  }, []);
-
-  useEffect(() => {
     userFollowedArtists().then(res => {
       updateArtists(res.data.artists.items);
     });
-  }, []);
-
-  useEffect(() => {
     userTopTracks().then(res => {
       updateTracks(res.data.items);
     });
@@ -115,20 +112,21 @@ export default () => {
 
   const renderArtists = () => {
     return (
-      <div>
+      <Artists>
         <h2>Following</h2>
-        {artists.map((artist, i) => {
-          return (
-            <ArtistContainer key={i}>
-              <img src={artist.images[2].url} alt="artist" />
-              <div>
-                <div>{artist.name}</div>
-                <FollowerCount>{numberWithCommas(artist.followers.total)} FOLLOWERS</FollowerCount>
-              </div>
-            </ArtistContainer>
-          );
-        })}
-      </div>
+        {artists &&
+          artists.map((artist, i) => {
+            return (
+              <ArtistContainer key={i}>
+                <img src={artist.images[2].url} alt="artist" />
+                <div>
+                  <div>{artist.name}</div>
+                  <FollowerCount>{numberWithCommas(artist.followers.total)} FOLLOWERS</FollowerCount>
+                </div>
+              </ArtistContainer>
+            );
+          })}
+      </Artists>
     );
   };
 
@@ -136,17 +134,18 @@ export default () => {
     return (
       <div>
         <h2>Top Tracks</h2>
-        {tracks.map((track, i) => {
-          return (
-            <Track key={i}>
-              <img src={track.album.images[2].url} alt={track.name} />
-              <div>
-                <div>{track.name}</div>
-                <TrackTime>{msToMinutes(track.duration_ms)}</TrackTime>
-              </div>
-            </Track>
-          );
-        })}
+        {tracks &&
+          tracks.map((track, i) => {
+            return (
+              <Track key={i}>
+                <img src={track.album.images[2].url} alt={track.name} />
+                <div>
+                  <div>{track.name}</div>
+                  <TrackTime>{msToMinutes(track.duration_ms)}</TrackTime>
+                </div>
+              </Track>
+            );
+          })}
       </div>
     );
   };
