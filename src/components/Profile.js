@@ -8,6 +8,7 @@ import Axios from "axios";
 const Container = styled.div`
   max-width: 1000px;
   margin: auto;
+  padding: 0 20px;
 `;
 
 const ProfileContainer = styled.div`
@@ -59,7 +60,7 @@ const FollowerCount = styled.div`
 const Track = styled.div`
   display: flex;
   align-items: center;
-  width: 600px;
+  max-width: 500px;
   margin: 10px 0;
   padding: 0 8px;
   img {
@@ -81,6 +82,9 @@ const TrackTime = styled.div`
 const Flex = styled.div`
   display: flex;
   width: 100%;
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 
 export default () => {
