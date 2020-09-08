@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { userInfo, userFollowedArtists, userTopTracks } from "../spotify";
+import { userInfo, userFollowedArtists, userTopTracks, userPlaylists } from "../spotify";
 import { numberWithCommas, msToMinutes } from "../utils/utilities";
 import styled from "styled-components";
 import Loading from "../components/Loading";
@@ -9,6 +9,14 @@ const Container = styled.div`
   max-width: 1000px;
   margin: auto;
   padding: 0 20px;
+`;
+
+const Flex = styled.div`
+  display: flex;
+  width: 100%;
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 
 const ProfileContainer = styled.div`
@@ -28,7 +36,7 @@ const ProfileContainer = styled.div`
 `;
 
 const ArtistsContainer = styled.div`
-  flex-basis: 40%;
+  flex-basis: 35%;
 `;
 
 const Artist = styled.div`
@@ -49,6 +57,11 @@ const Artist = styled.div`
   &:hover {
     cursor: pointer;
   }
+`;
+
+const TracksContainer = styled.div`
+  flex-basis: 45%;
+  margin-right: 30px;
 `;
 
 const FollowerCount = styled.div`
@@ -79,25 +92,24 @@ const TrackTime = styled.div`
   margin-top: 3px;
 `;
 
-const Flex = styled.div`
-  display: flex;
-  width: 100%;
-  @media (max-width: 768px) {
-    flex-direction: column;
-  }
+const Playlist = styled.div`
+  margin: 10px 0;
 `;
 
 export default () => {
   const [user, setUser] = useState(null);
   const [artists, setArtists] = useState(null);
   const [tracks, setTracks] = useState(null);
+  const [playlists, setPlaylists] = useState(null);
 
   useEffect(() => {
-    Axios.all([userInfo(), userFollowedArtists(), userTopTracks()]).then(
-      Axios.spread((user, followedArtists, tracks) => {
+    Axios.all([userInfo(), userFollowedArtists(), userTopTracks(), userPlaylists()]).then(
+      Axios.spread((user, followedArtists, tracks, playlists) => {
         setUser(user.data);
         setArtists(followedArtists.data.artists.items);
         setTracks(tracks.data.items);
+        setPlaylists(playlists.data.items);
+        console.log(playlists.data.items);
       })
     );
   }, []);
@@ -135,7 +147,7 @@ export default () => {
 
   const renderTracks = () => {
     return (
-      <div>
+      <TracksContainer>
         <h2>Top Tracks</h2>
         {tracks &&
           tracks.map((track, i) => {
@@ -147,6 +159,22 @@ export default () => {
                   <TrackTime>{msToMinutes(track.duration_ms)}</TrackTime>
                 </div>
               </Track>
+            );
+          })}
+      </TracksContainer>
+    );
+  };
+
+  const renderPlaylists = () => {
+    return (
+      <div>
+        <h2>Playlists</h2>
+        {playlists &&
+          playlists.map(playlist => {
+            return (
+              <Playlist key={playlist.id}>
+                <img src={playlist.images[0].url} alt={playlist.name} height="120" width="120" />
+              </Playlist>
             );
           })}
       </div>
@@ -161,6 +189,7 @@ export default () => {
           <Flex>
             {renderArtists()}
             {renderTracks()}
+            {renderPlaylists()}
           </Flex>
         </>
       ) : (
