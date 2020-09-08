@@ -109,7 +109,6 @@ export default () => {
         setArtists(followedArtists.data.artists.items);
         setTracks(tracks.data.items);
         setPlaylists(playlists.data.items);
-        console.log(playlists.data.items);
       })
     );
   }, []);
