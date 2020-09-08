@@ -11,6 +11,14 @@ const Container = styled.div`
   padding: 0 20px;
 `;
 
+const Flex = styled.div`
+  display: flex;
+  width: 100%;
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+`;
+
 const ProfileContainer = styled.div`
   margin-top: 50px;
   padding: 0 20px;
@@ -28,7 +36,7 @@ const ProfileContainer = styled.div`
 `;
 
 const ArtistsContainer = styled.div`
-  flex-basis: 40%;
+  flex-basis: 35%;
 `;
 
 const Artist = styled.div`
@@ -49,6 +57,11 @@ const Artist = styled.div`
   &:hover {
     cursor: pointer;
   }
+`;
+
+const TracksContainer = styled.div`
+  flex-basis: 45%;
+  margin-right: 30px;
 `;
 
 const FollowerCount = styled.div`
@@ -79,12 +92,8 @@ const TrackTime = styled.div`
   margin-top: 3px;
 `;
 
-const Flex = styled.div`
-  display: flex;
-  width: 100%;
-  @media (max-width: 768px) {
-    flex-direction: column;
-  }
+const Playlist = styled.div`
+  margin: 10px 0;
 `;
 
 export default () => {
@@ -138,7 +147,7 @@ export default () => {
 
   const renderTracks = () => {
     return (
-      <div>
+      <TracksContainer>
         <h2>Top Tracks</h2>
         {tracks &&
           tracks.map((track, i) => {
@@ -152,7 +161,7 @@ export default () => {
               </Track>
             );
           })}
-      </div>
+      </TracksContainer>
     );
   };
 
@@ -163,9 +172,9 @@ export default () => {
         {playlists &&
           playlists.map(playlist => {
             return (
-              <div key={playlist.id}>
+              <Playlist key={playlist.id}>
                 <img src={playlist.images[0].url} alt={playlist.name} height="120" width="120" />
-              </div>
+              </Playlist>
             );
           })}
       </div>
