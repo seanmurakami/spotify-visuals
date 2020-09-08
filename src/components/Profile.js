@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { userInfo, userFollowedArtists, userTopTracks } from "../spotify";
+import { userInfo, userFollowedArtists, userTopTracks, userPlaylists } from "../spotify";
 import { numberWithCommas, msToMinutes } from "../utils/utilities";
 import styled from "styled-components";
 import Loading from "../components/Loading";
@@ -91,13 +91,16 @@ export default () => {
   const [user, setUser] = useState(null);
   const [artists, setArtists] = useState(null);
   const [tracks, setTracks] = useState(null);
+  const [playlists, setPlaylists] = useState(null);
 
   useEffect(() => {
-    Axios.all([userInfo(), userFollowedArtists(), userTopTracks()]).then(
-      Axios.spread((user, followedArtists, tracks) => {
+    Axios.all([userInfo(), userFollowedArtists(), userTopTracks(), userPlaylists()]).then(
+      Axios.spread((user, followedArtists, tracks, playlists) => {
         setUser(user.data);
         setArtists(followedArtists.data.artists.items);
         setTracks(tracks.data.items);
+        setPlaylists(playlists.data.items);
+        console.log(playlists.data.items);
       })
     );
   }, []);
@@ -153,6 +156,22 @@ export default () => {
     );
   };
 
+  const renderPlaylists = () => {
+    return (
+      <div>
+        <h2>Playlists</h2>
+        {playlists &&
+          playlists.map(playlist => {
+            return (
+              <div key={playlist.id}>
+                <img src={playlist.images[0].url} alt={playlist.name} height="120" width="120" />
+              </div>
+            );
+          })}
+      </div>
+    );
+  };
+
   return (
     <Container>
       {user ? (
@@ -161,6 +180,7 @@ export default () => {
           <Flex>
             {renderArtists()}
             {renderTracks()}
+            {renderPlaylists()}
           </Flex>
         </>
       ) : (
