@@ -8,19 +8,18 @@ import Axios from "axios";
 const Container = styled.div`
   max-width: 1000px;
   margin: auto;
-  padding: 0 20px;
+  padding: 50px 20px;
 `;
 
 const Flex = styled.div`
   display: flex;
-  width: 100%;
+  justify-content: space-between;
   @media (max-width: 768px) {
     flex-direction: column;
   }
 `;
 
 const ProfileContainer = styled.div`
-  margin-top: 50px;
   padding: 0 20px;
   width: 100%;
   text-align: center;
@@ -36,17 +35,26 @@ const ProfileContainer = styled.div`
 `;
 
 const ArtistsContainer = styled.div`
-  flex-basis: 35%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 `;
 
 const Artist = styled.div`
   border-radius: 10px;
   background-color: #2a2a2a;
   display: flex;
+  flex-basis: 33%;
+  @media (max-width: 768px) {
+    flex-basis: 49%;
+  }
+  @media (max-width: 556px) {
+    flex-basis: 100%;
+  }
+  width: 100%;
   align-items: center;
-  margin: 10px 0;
+  margin: 0 0 10px 0;
   padding: 8px;
-  width: 280px;
   letter-spacing: 0.8px;
   img {
     height: 40px;
@@ -60,8 +68,8 @@ const Artist = styled.div`
 `;
 
 const TracksContainer = styled.div`
-  flex-basis: 45%;
-  margin-right: 30px;
+  width: 100%;
+  max-width: 550px;
 `;
 
 const FollowerCount = styled.div`
@@ -73,7 +81,6 @@ const FollowerCount = styled.div`
 const Track = styled.div`
   display: flex;
   align-items: center;
-  max-width: 500px;
   margin: 10px 0;
   padding: 0 8px;
   img {
@@ -92,8 +99,23 @@ const TrackTime = styled.div`
   margin-top: 3px;
 `;
 
+const PlaylistContainer = styled.div`
+  display: flex;
+  width: 250px;
+  justify-content: space-between;
+  @media (min-width: 769px) {
+    flex-wrap: wrap;
+    width: 260px;
+  }
+  @media (max-width: 768px) {
+    width: 100%;
+    overflow-x: scroll;
+  }
+`;
+
 const Playlist = styled.div`
-  margin: 10px 0;
+  margin-bottom: 10px;
+  margin-right: 10px;
 `;
 
 export default () => {
@@ -126,21 +148,23 @@ export default () => {
 
   const renderArtists = () => {
     return (
-      <ArtistsContainer>
+      <div>
         <h2>Following</h2>
-        {artists &&
-          artists.map((artist, i) => {
-            return (
-              <Artist key={i}>
-                <img src={artist.images[0].url} alt="artist" />
-                <div>
-                  <div>{artist.name}</div>
-                  <FollowerCount>{numberWithCommas(artist.followers.total)} FOLLOWERS</FollowerCount>
-                </div>
-              </Artist>
-            );
-          })}
-      </ArtistsContainer>
+        <ArtistsContainer>
+          {artists &&
+            artists.map((artist, i) => {
+              return (
+                <Artist key={i}>
+                  <img src={artist.images[0].url} alt="artist" />
+                  <div>
+                    <div>{artist.name}</div>
+                    <FollowerCount>{numberWithCommas(artist.followers.total)} FOLLOWERS</FollowerCount>
+                  </div>
+                </Artist>
+              );
+            })}
+        </ArtistsContainer>
+      </div>
     );
   };
 
@@ -168,14 +192,16 @@ export default () => {
     return (
       <div>
         <h2>Playlists</h2>
-        {playlists &&
-          playlists.map(playlist => {
-            return (
-              <Playlist key={playlist.id}>
-                <img src={playlist.images[0].url} alt={playlist.name} height="120" width="120" />
-              </Playlist>
-            );
-          })}
+        <PlaylistContainer>
+          {playlists &&
+            playlists.map(playlist => {
+              return (
+                <Playlist key={playlist.id}>
+                  <img src={playlist.images[0].url} alt={playlist.name} height="120" width="120" />
+                </Playlist>
+              );
+            })}
+        </PlaylistContainer>
       </div>
     );
   };
@@ -185,8 +211,8 @@ export default () => {
       {user ? (
         <>
           {renderProfile()}
+          {renderArtists()}
           <Flex>
-            {renderArtists()}
             {renderTracks()}
             {renderPlaylists()}
           </Flex>

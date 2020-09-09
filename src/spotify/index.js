@@ -75,6 +75,6 @@ export const userInfo = () => axios.get("https://api.spotify.com/v1/me");
 
 export const userFollowedArtists = () => axios.get("https://api.spotify.com/v1/me/following?type=artist&limit=10");
 
-export const userTopTracks = () => axios.get("https://api.spotify.com/v1/me/top/tracks");
+export const userTopTracks = () => axios.get("https://api.spotify.com/v1/me/top/tracks?limit=30");
 
-export const userPlaylists = () => axios.get("https://api.spotify.com/v1/me/playlists?limit=10");
+export const userPlaylists = () => axios.get("https://api.spotify.com/v1/me/playlists?limit=50");
