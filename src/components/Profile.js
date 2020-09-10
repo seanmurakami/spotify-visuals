@@ -34,6 +34,18 @@ const ProfileContainer = styled.div`
   }
 `;
 
+const DefaultIcon = styled.div`
+  width: 228px;
+  height: 228px;
+  background-color: ${props => props.theme.colors.green};
+  border-radius: 50%;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 80px;
+`;
+
 const ArtistsContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -168,7 +180,7 @@ export default () => {
   const renderProfile = () => {
     return (
       <ProfileContainer>
-        {user.images.length > 0 && <img src={user.images[0].url} alt="user profile"></img>}
+        {user.images.length > 0 ? <img src={user.images[0].url} alt="user profile"></img> : <DefaultIcon>{user.display_name[0]}</DefaultIcon>}
         <div>
           <h1>{user.display_name}</h1>
         </div>
