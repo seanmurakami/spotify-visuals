@@ -29,7 +29,7 @@ const ProfileContainer = styled.div`
   }
   img {
     border-radius: 50%;
-    max-width: 280px;
+    max-width: 228px;
     width: 100%;
   }
 `;
@@ -56,6 +56,7 @@ const Artist = styled.div`
   margin: 0 0 10px 0;
   padding: 8px;
   letter-spacing: 0.8px;
+  transition: all 300ms ease-in-out;
   img {
     height: 40px;
     width: 40px;
@@ -64,18 +65,20 @@ const Artist = styled.div`
   }
   &:hover {
     cursor: pointer;
+    background-color: ${props => props.theme.colors.lightGrey};
+    color: ${props => props.theme.colors.green};
   }
-`;
-
-const TracksContainer = styled.div`
-  width: 100%;
-  max-width: 550px;
 `;
 
 const FollowerCount = styled.div`
   color: grey;
   font-size: 12px;
   margin-top: 3px;
+`;
+
+const TracksContainer = styled.section`
+  width: 100%;
+  max-width: 550px;
 `;
 
 const Track = styled.div`
@@ -90,6 +93,11 @@ const Track = styled.div`
   }
   &:hover {
     cursor: pointer;
+  }
+  &:hover {
+    & .track-name {
+      color: ${props => props.theme.colors.green};
+    }
   }
 `;
 
@@ -113,9 +121,31 @@ const PlaylistContainer = styled.div`
   }
 `;
 
+const Overlay = styled.div`
+  background-color: rgba(0, 0, 0, 0.7);
+  height: 100%;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  transition: all 300ms ease-in-out;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+`;
+
 const Playlist = styled.div`
+  position: relative;
+  height: 120px;
   margin-bottom: 10px;
   margin-right: 10px;
+  transition: all 300ms ease-in-out;
+  &:hover {
+    ${Overlay} {
+      opacity: 1;
+    }
+  }
 `;
 
 export default () => {
@@ -148,7 +178,7 @@ export default () => {
 
   const renderArtists = () => {
     return (
-      <div>
+      <section>
         <h2>Following</h2>
         <ArtistsContainer>
           {artists &&
@@ -164,7 +194,7 @@ export default () => {
               );
             })}
         </ArtistsContainer>
-      </div>
+      </section>
     );
   };
 
@@ -178,7 +208,7 @@ export default () => {
               <Track key={i}>
                 <img src={track.album.images[0].url} alt={track.name} />
                 <div>
-                  <div>{track.name}</div>
+                  <div className="track-name">{track.name}</div>
                   <TrackTime>{msToMinutes(track.duration_ms)}</TrackTime>
                 </div>
               </Track>
@@ -190,7 +220,7 @@ export default () => {
 
   const renderPlaylists = () => {
     return (
-      <div>
+      <section>
         <h2>Playlists</h2>
         <PlaylistContainer>
           {playlists &&
@@ -198,11 +228,14 @@ export default () => {
               return (
                 <Playlist key={playlist.id}>
                   <img src={playlist.images[0].url} alt={playlist.name} height="120" width="120" />
+                  <Overlay>
+                    <div>{playlist.name}</div>
+                  </Overlay>
                 </Playlist>
               );
             })}
         </PlaylistContainer>
-      </div>
+      </section>
     );
   };
 
