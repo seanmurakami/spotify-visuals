@@ -56,7 +56,7 @@ const Artist = styled.div`
   margin: 0 0 10px 0;
   padding: 8px;
   letter-spacing: 0.8px;
-  transition: background-color 300ms ease-in-out;
+  transition: all 300ms ease-in-out;
   img {
     height: 40px;
     width: 40px;
@@ -65,7 +65,8 @@ const Artist = styled.div`
   }
   &:hover {
     cursor: pointer;
-    background-color: ${props => props.theme.colors.darkGreen};
+    background-color: ${props => props.theme.colors.lightGrey};
+    color: ${props => props.theme.colors.green};
   }
 `;
 
