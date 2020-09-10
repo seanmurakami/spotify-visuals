@@ -93,6 +93,11 @@ const Track = styled.div`
   &:hover {
     cursor: pointer;
   }
+  &:hover {
+    & .track-name {
+      color: ${props => props.theme.colors.green};
+    }
+  }
 `;
 
 const TrackTime = styled.div`
@@ -180,7 +185,7 @@ export default () => {
               <Track key={i}>
                 <img src={track.album.images[0].url} alt={track.name} />
                 <div>
-                  <div>{track.name}</div>
+                  <div className="track-name">{track.name}</div>
                   <TrackTime>{msToMinutes(track.duration_ms)}</TrackTime>
                 </div>
               </Track>
