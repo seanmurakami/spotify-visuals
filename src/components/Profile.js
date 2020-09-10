@@ -69,15 +69,15 @@ const Artist = styled.div`
   }
 `;
 
-const TracksContainer = styled.div`
-  width: 100%;
-  max-width: 550px;
-`;
-
 const FollowerCount = styled.div`
   color: grey;
   font-size: 12px;
   margin-top: 3px;
+`;
+
+const TracksContainer = styled.section`
+  width: 100%;
+  max-width: 550px;
 `;
 
 const Track = styled.div`
@@ -155,7 +155,7 @@ export default () => {
 
   const renderArtists = () => {
     return (
-      <div>
+      <section>
         <h2>Following</h2>
         <ArtistsContainer>
           {artists &&
@@ -171,7 +171,7 @@ export default () => {
               );
             })}
         </ArtistsContainer>
-      </div>
+      </section>
     );
   };
 
@@ -197,7 +197,7 @@ export default () => {
 
   const renderPlaylists = () => {
     return (
-      <div>
+      <section>
         <h2>Playlists</h2>
         <PlaylistContainer>
           {playlists &&
@@ -209,7 +209,7 @@ export default () => {
               );
             })}
         </PlaylistContainer>
-      </div>
+      </section>
     );
   };
 
