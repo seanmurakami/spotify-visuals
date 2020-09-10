@@ -121,9 +121,31 @@ const PlaylistContainer = styled.div`
   }
 `;
 
+const Overlay = styled.div`
+  background-color: rgba(0, 0, 0, 0.7);
+  height: 100%;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  transition: all 300ms ease-in-out;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+`;
+
 const Playlist = styled.div`
+  position: relative;
+  height: 120px;
   margin-bottom: 10px;
   margin-right: 10px;
+  transition: all 300ms ease-in-out;
+  &:hover {
+    ${Overlay} {
+      opacity: 1;
+    }
+  }
 `;
 
 export default () => {
@@ -206,6 +228,9 @@ export default () => {
               return (
                 <Playlist key={playlist.id}>
                   <img src={playlist.images[0].url} alt={playlist.name} height="120" width="120" />
+                  <Overlay>
+                    <div>{playlist.name}</div>
+                  </Overlay>
                 </Playlist>
               );
             })}
