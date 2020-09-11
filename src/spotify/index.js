@@ -21,12 +21,10 @@ function getToken() {
   if (error) {
     console.error(error);
     refreshToken();
-    return;
   }
 
   if (Date.now() - getExpirationTime() > 3600000) {
     refreshToken();
-    return;
   }
 
   const localAccessToken = getLocalAccessToken();
