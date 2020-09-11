@@ -41,12 +41,16 @@ var stateKey = "spotify_auth_state";
 
 var app = express();
 
-app.use(express.static(path.resolve(__dirname, "/build")));
+app.use(express.static(path.resolve(__dirname, "./build")));
 
 app
   .use(express.static(__dirname + "/build"))
   .use(cors())
   .use(cookieParser());
+
+app.get("/", function (req, res) {
+  res.render(path.resolve(__dirname, "./build/index.html"));
+});
 
 app.get("/login", function (req, res) {
   var state = generateRandomString(16);
@@ -144,8 +148,8 @@ app.get("/refresh_token", function (req, res) {
   });
 });
 
-app.get("*", function (request, response) {
-  response.sendFile(path.resolve(__dirname, "/public", "index.html"));
+app.get("/*", function (request, response) {
+  response.sendFile(path.join(__dirname, "build", "index.html"));
 });
 
 app.listen(port, () => {
