@@ -48,8 +48,8 @@ app
   .use(cors())
   .use(cookieParser());
 
-app.get("/", function (req, res) {
-  res.render(path.resolve(__dirname, "./build/index.html"));
+app.get("/*", function (req, res) {
+  res.sendFile(path.join(__dirname, "build", "index.html"));
 });
 
 app.get("/login", function (req, res) {
@@ -148,7 +148,7 @@ app.get("/refresh_token", function (req, res) {
   });
 });
 
-app.get("*", function (request, response) {
+app.get("/*", function (request, response) {
   response.sendFile(path.resolve(__dirname, "./public", "index.html"));
 });
 
