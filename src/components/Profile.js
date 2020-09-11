@@ -83,7 +83,7 @@ export default () => {
         {user.images.length > 0 ? <img src={user.images[0].url} alt="user profile"></img> : <DefaultIcon>{user.display_name[0]}</DefaultIcon>}
         <div>
           <h1>{user.display_name}</h1>
-          <LogOutBtn onClick={logout}>Log Out</LogOutBtn>
+          <LogOutBtn onClick={logout}>LOG OUT</LogOutBtn>
         </div>
       </ProfileContainer>
     );
