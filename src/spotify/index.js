@@ -78,3 +78,7 @@ export const userFollowedArtists = () => axios.get("https://api.spotify.com/v1/m
 export const userTopTracks = () => axios.get("https://api.spotify.com/v1/me/top/tracks?limit=30");
 
 export const userPlaylists = () => axios.get("https://api.spotify.com/v1/me/playlists?limit=50");
+
+export const artistInfo = artistId => axios.get(`https://api.spotify.com/v1/artists/${artistId}`);
+
+export const artistTopTracks = artistId => axios.get(`https://api.spotify.com/v1/artists/${artistId}/top-tracks?country=US`);
