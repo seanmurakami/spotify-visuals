@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import Theme from "../styles/Theme";
 
 const LOGIN_URI = process.env.NODE_ENV !== "production" ? "http://localhost:8888/login" : "https://spotify-visuals.herokuapp.com/login";
 
@@ -55,14 +54,12 @@ const LoginBtn = styled.a`
 
 export default () => {
   return (
-    <Theme>
-      <LoginContainer>
-        <Gradient />
-        <Container>
-          <Title>Spotify Visuals</Title>
-          <LoginBtn href={LOGIN_URI}>LOGIN TO SPOTIFY</LoginBtn>
-        </Container>
-      </LoginContainer>
-    </Theme>
+    <LoginContainer>
+      <Gradient />
+      <Container>
+        <Title>Spotify Visuals</Title>
+        <LoginBtn href={LOGIN_URI}>LOGIN TO SPOTIFY</LoginBtn>
+      </Container>
+    </LoginContainer>
   );
 };
