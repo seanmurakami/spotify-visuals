@@ -50,9 +50,9 @@ export default () => {
     Axios.all([userInfo(), userFollowedArtists(), userTopTracks(), userPlaylists()]).then(
       Axios.spread((user, followedArtists, tracks, playlists) => {
         setUser(user.data);
-        setArtists(followedArtists.data.artists.items);
+        setArtists(followedArtists.data.artists);
         setTracks(tracks.data.items);
-        setPlaylists(playlists.data.items);
+        setPlaylists(playlists.data);
       })
     );
   }, []);

@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { numberWithCommas, msToMinutes } from "../utils/utilities";
 import styled from "styled-components";
+import Subheader from "./Subheader";
 
 const Flex = styled.div`
   display: flex;
@@ -129,10 +130,10 @@ export default ({ artists, tracks, playlists }) => {
   const renderArtists = () => {
     return (
       <section>
-        <h2>Following</h2>
+        <Subheader count={artists.total} title="Following" />
         <ArtistsContainer>
           {artists &&
-            artists.map((artist, i) => {
+            artists.items.map((artist, i) => {
               return (
                 <Artist key={i} to={`/artist/${artist.id}`}>
                   <img src={artist.images[0].url} alt="artist" />
@@ -171,10 +172,10 @@ export default ({ artists, tracks, playlists }) => {
   const renderPlaylists = () => {
     return (
       <section>
-        <h2>Playlists</h2>
+        <Subheader count={playlists.total} title="Playlists" />
         <PlaylistContainer>
           {playlists &&
-            playlists.map(playlist => {
+            playlists.items.map(playlist => {
               return (
                 <Playlist key={playlist.id}>
                   <img src={playlist.images[0].url} alt={playlist.name} height="120" width="120" />
@@ -191,15 +192,11 @@ export default ({ artists, tracks, playlists }) => {
 
   return (
     <>
-      {artists && (
-        <>
-          {renderArtists()}
-          <Flex>
-            {renderTracks()}
-            {renderPlaylists()}
-          </Flex>
-        </>
-      )}
+      {artists && renderArtists()}
+      <Flex>
+        {tracks && renderTracks()}
+        {playlists && renderPlaylists()}
+      </Flex>
     </>
   );
 };
