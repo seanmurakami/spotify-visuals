@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Axios from "axios";
-import { userInfo, userFollowedArtists, userTopTracks, userPlaylists } from "../spotify";
+import { userInfo, userFollowedArtists, userTopTracks, userPlaylists, logout } from "../spotify";
 import User from "./User";
 import Artist from "./Artist";
 import styled from "styled-components";
@@ -20,6 +20,7 @@ const ProfileContainer = styled.div`
   h1 {
     font-size: 40px;
     letter-spacing: 1px;
+    margin-bottom: 10px;
   }
   img {
     border-radius: 50%;
@@ -38,6 +39,25 @@ const DefaultIcon = styled.div`
   justify-content: center;
   align-items: center;
   font-size: 80px;
+`;
+
+const LogOutBtn = styled.button`
+  background-color: ${({ theme: { colors } }) => colors.black};
+  border: 1px solid ${({ theme: { colors } }) => colors.white};
+  border-radius: 30px;
+  color: ${({ theme: { colors } }) => colors.white};
+  font-weight: 700;
+  padding: 12px 24px;
+  letter-spacing: 2px;
+  transition: all 0.3s ease-in-out;
+  &:hover,
+  &:focus {
+    background-color: ${({ theme: { colors } }) => colors.white};
+    color: ${({ theme: { colors } }) => colors.black};
+  }
+  @media (max-width: 768px) {
+    margin-bottom: 20px;
+  }
 `;
 
 export default () => {
@@ -63,6 +83,7 @@ export default () => {
         {user.images.length > 0 ? <img src={user.images[0].url} alt="user profile"></img> : <DefaultIcon>{user.display_name[0]}</DefaultIcon>}
         <div>
           <h1>{user.display_name}</h1>
+          <LogOutBtn onClick={logout}>Log Out</LogOutBtn>
         </div>
       </ProfileContainer>
     );
