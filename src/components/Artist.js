@@ -8,7 +8,9 @@ import Axios from "axios";
 
 const Flex = styled.div`
   display: flex;
-  @media (max-width: 768px) {
+  justify-content: center;
+  margin-top: 30px;
+  @media (max-width: 578px) {
     flex-direction: column;
   }
   h2 {
@@ -17,13 +19,24 @@ const Flex = styled.div`
 `;
 
 const ArtistHeader = styled.div`
-  margin-right: 30px;
+  margin-right: 50px;
   margin-bottom: 20px;
+  h2 {
+    margin-top: 10px;
+    margin-bottom: 4px;
+  }
+  img {
+  }
+`;
+
+const Followers = styled.div`
+  color: grey;
+  font-size: 14px;
 `;
 
 const TracksContainer = styled.section`
   width: 100%;
-  max-width: 550px;
+  flex-basis: 60%;
 `;
 
 const Track = styled.div`
@@ -36,6 +49,9 @@ const Track = styled.div`
     width: 50px;
     margin-right: 20px;
   }
+  .mr {
+    margin-right: 20px;
+  }
   &:hover {
     cursor: pointer;
   }
@@ -46,10 +62,16 @@ const Track = styled.div`
   }
 `;
 
-const TrackTime = styled.div`
+const TrackAlbum = styled.div`
   color: grey;
   font-size: 12px;
   margin-top: 3px;
+`;
+
+const TrackTime = styled.div`
+  color: grey;
+  font-size: 14px;
+  margin-left: auto;
 `;
 
 export default () => {
@@ -71,32 +93,33 @@ export default () => {
 
   const renderTracks = () => {
     return (
-      <TracksContainer>
+      <>
         <h2>Top Tracks</h2>
         {topTracks &&
           topTracks.map((track, i) => {
             return (
               <Track key={i}>
                 <img src={track.album.images[0].url} alt={track.name} />
-                <div>
+                <div className="mr">
                   <div className="track-name">{track.name}</div>
-                  <TrackTime>{msToMinutes(track.duration_ms)}</TrackTime>
+                  <TrackAlbum>{track.album.name}</TrackAlbum>
                 </div>
+                <TrackTime>{msToMinutes(track.duration_ms)}</TrackTime>
               </Track>
             );
           })}
-      </TracksContainer>
+      </>
     );
   };
 
   return artist ? (
     <Flex>
       <ArtistHeader>
-        <img src={artist.images[0].url} alt={artist.name} height="200" width="200" />
+        <img src={artist.images[0].url} alt={artist.name} height="180" width="180" />
         <h2>{artist.name}</h2>
-        <div>Followers: {numberWithCommas(artist.followers.total)}</div>
+        <Followers>Followers: {numberWithCommas(artist.followers.total)}</Followers>
       </ArtistHeader>
-      <div>{renderTracks()}</div>
+      <TracksContainer>{renderTracks()}</TracksContainer>
     </Flex>
   ) : (
     <Loading />
