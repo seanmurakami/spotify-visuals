@@ -57,6 +57,13 @@ async function refreshToken() {
 
 export const userToken = getToken();
 
+export const logout = () => {
+  window.localStorage.removeItem("spotify-access-token");
+  window.localStorage.removeItem("spotify-refresh-token");
+  window.localStorage.removeItem("spotify-token-expiration");
+  window.location = "/";
+};
+
 axios.interceptors.request.use(
   function (config) {
     const headers = {

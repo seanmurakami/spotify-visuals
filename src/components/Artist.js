@@ -16,6 +16,11 @@ const Flex = styled.div`
   }
 `;
 
+const ArtistHeader = styled.div`
+  margin-right: 30px;
+  margin-bottom: 20px;
+`;
+
 const TracksContainer = styled.section`
   width: 100%;
   max-width: 550px;
@@ -86,11 +91,11 @@ export default () => {
 
   return artist ? (
     <Flex>
-      <div style={{ marginRight: "30px" }}>
+      <ArtistHeader>
         <img src={artist.images[0].url} alt={artist.name} height="200" width="200" />
         <h2>{artist.name}</h2>
         <div>Followers: {numberWithCommas(artist.followers.total)}</div>
-      </div>
+      </ArtistHeader>
       <div>{renderTracks()}</div>
     </Flex>
   ) : (
