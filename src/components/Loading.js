@@ -12,7 +12,7 @@ const rotate = keyframes`
 
 const Container = styled.div`
   width: inherit;
-  height: 100vh;
+  height: ${props => (props.full ? "100vh" : "")};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -28,9 +28,9 @@ const Dot = styled.div`
   animation-delay: ${props => props.delay};
 `;
 
-export default () => {
+export default ({ full }) => {
   return (
-    <Container>
+    <Container full={full}>
       <Dot delay="0s" />
       <Dot delay="0.3s" />
       <Dot delay="0.6s" />
