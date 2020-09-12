@@ -1,7 +1,5 @@
 # Spotify Visuals
 
-![spotify-visuals](https://user-images.githubusercontent.com/38697885/93006576-b5691280-f512-11ea-87ae-bcb2fe39e38d.gif)
-
 Web application utilizing:
 
 - [Create React App](https://github.com/facebook/create-react-app)
