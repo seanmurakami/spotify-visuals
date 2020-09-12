@@ -122,7 +122,7 @@ const Overlay = styled.div`
   z-index: 100;
 `;
 
-const Playlist = styled.div`
+const Playlist = styled(Link)`
   position: relative;
   height: 120px;
   margin-bottom: 10px;
@@ -187,7 +187,7 @@ export default ({ artists, tracks, playlists }) => {
           {playlists &&
             playlists.items.map(playlist => {
               return (
-                <Playlist key={playlist.id}>
+                <Playlist key={playlist.id} to={`/playlist/${playlist.id}`}>
                   <img src={playlist.images[0].url} alt={playlist.name} height="120" width="120" />
                   <Overlay>
                     <div>{playlist.name}</div>

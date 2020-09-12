@@ -89,3 +89,7 @@ export const userPlaylists = () => axios.get("https://api.spotify.com/v1/me/play
 export const artistInfo = artistId => axios.get(`https://api.spotify.com/v1/artists/${artistId}`);
 
 export const artistTopTracks = artistId => axios.get(`https://api.spotify.com/v1/artists/${artistId}/top-tracks?country=US`);
+
+export const getPlaylist = playlistId => axios.get(`https://api.spotify.com/v1/playlists/${playlistId}`);
+
+export const playlistTracks = playlistId => axios.get(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`);

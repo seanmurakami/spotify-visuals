@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
-import { artistInfo, artistTopTracks } from "../spotify";
+import { getPlaylist, playlistTracks } from "../spotify";
 import { numberWithCommas, msToMinutes } from "../utils/utilities";
 import Loading from "./Loading";
 import Axios from "axios";
@@ -18,19 +18,16 @@ const Flex = styled.div`
   }
 `;
 
-const ArtistHeader = styled.div`
+const PlaylistHeader = styled.div`
   margin-right: 50px;
   margin-bottom: 20px;
   h2 {
     margin-top: 10px;
     margin-bottom: 4px;
   }
-  img {
-    border-radius: 5px;
-  }
 `;
 
-const Followers = styled.div`
+const PlaylistCount = styled.div`
   color: grey;
   font-size: 14px;
 `;
@@ -77,15 +74,16 @@ const TrackTime = styled.div`
 
 export default () => {
   const { id } = useParams();
-  const [artist, setArtist] = useState(null);
-  const [topTracks, setTopTracks] = useState(null);
+  const [playlist, setPlaylist] = useState(null);
+  const [tracks, setTracks] = useState(null);
 
   useEffect(() => {
     if (id) {
-      Axios.all([artistInfo(id), artistTopTracks(id)]).then(
-        Axios.spread((artist, topTracks) => {
-          setArtist(artist.data);
-          setTopTracks(topTracks.data.tracks);
+      Axios.all([getPlaylist(id), playlistTracks(id)]).then(
+        Axios.spread((playlistInfo, playlistTracks) => {
+          setPlaylist(playlistInfo.data);
+          setTracks(playlistTracks.data);
+          console.log(playlistTracks);
         })
       );
     }
@@ -94,12 +92,12 @@ export default () => {
   const renderTracks = () => {
     return (
       <>
-        <h2>Top Tracks</h2>
-        {topTracks &&
-          topTracks.map((track, i) => {
+        <h2>Tracks</h2>
+        {tracks &&
+          tracks.items.map(({ track }) => {
             return (
-              <Track key={i}>
-                <img src={track.album.images[0].url} alt={track.name} />
+              <Track key={track.id}>
+                {track.album.images.length > 0 && <img src={track.album.images[0].url} alt={track.name} />}
                 <div className="mr">
                   <div className="track-name">{track.name}</div>
                   <TrackAlbum>{track.album.name}</TrackAlbum>
@@ -112,13 +110,13 @@ export default () => {
     );
   };
 
-  return artist ? (
+  return tracks ? (
     <Flex>
-      <ArtistHeader>
-        <img src={artist.images[0].url} alt={artist.name} height="180" width="180" />
-        <h2>{artist.name}</h2>
-        <Followers>Followers: {numberWithCommas(artist.followers.total)}</Followers>
-      </ArtistHeader>
+      <PlaylistHeader>
+        {playlist.images.length > 0 && <img src={playlist.images[0].url} alt={playlist.name} height="180" width="180" />}
+        <h2>{playlist.name}</h2>
+        <PlaylistCount>Total: {numberWithCommas(tracks.total)}</PlaylistCount>
+      </PlaylistHeader>
       <TracksContainer>{renderTracks()}</TracksContainer>
     </Flex>
   ) : (
