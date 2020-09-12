@@ -56,7 +56,7 @@ const FollowerCount = styled.div`
 
 const TracksContainer = styled.section`
   width: 100%;
-  max-width: 550px;
+  flex-basis: 65%;
 `;
 
 const Track = styled.div`
@@ -69,6 +69,9 @@ const Track = styled.div`
     width: 50px;
     margin-right: 20px;
   }
+  .mr {
+    margin-right: 20px;
+  }
   &:hover {
     cursor: pointer;
   }
@@ -79,10 +82,16 @@ const Track = styled.div`
   }
 `;
 
-const TrackTime = styled.div`
+const TrackAlbum = styled.div`
   color: grey;
   font-size: 12px;
   margin-top: 3px;
+`;
+
+const TrackTime = styled.div`
+  color: grey;
+  font-size: 14px;
+  margin-left: auto;
 `;
 
 const PlaylistContainer = styled.div`
@@ -158,10 +167,11 @@ export default ({ artists, tracks, playlists }) => {
             return (
               <Track key={i}>
                 <img src={track.album.images[0].url} alt={track.name} />
-                <div>
+                <div className="mr">
                   <div className="track-name">{track.name}</div>
-                  <TrackTime>{msToMinutes(track.duration_ms)}</TrackTime>
+                  <TrackAlbum>{track.album.name}</TrackAlbum>
                 </div>
+                <TrackTime>{msToMinutes(track.duration_ms)}</TrackTime>
               </Track>
             );
           })}

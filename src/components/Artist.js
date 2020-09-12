@@ -26,6 +26,7 @@ const ArtistHeader = styled.div`
     margin-bottom: 4px;
   }
   img {
+    border-radius: 5px;
   }
 `;
 
