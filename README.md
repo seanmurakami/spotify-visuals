@@ -1,6 +1,6 @@
-## Spotify Visuals
+# Spotify Visuals
 
-![spotify-visuals](https://user-images.githubusercontent.com/38697885/92979704-58a12580-f448-11ea-8ebd-d1febbe30161.gif)
+![spotify-visuals](https://user-images.githubusercontent.com/38697885/93006576-b5691280-f512-11ea-87ae-bcb2fe39e38d.gif)
 
 Web application utilizing:
 
