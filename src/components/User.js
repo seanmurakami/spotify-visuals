@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { numberWithCommas, msToMinutes } from "../utils/utilities";
+import { Track, TrackAlbum, TrackTime } from "../styles/Tracks";
 import styled from "styled-components";
 import Subheader from "./Subheader";
 
@@ -57,41 +58,6 @@ const FollowerCount = styled.div`
 const TracksContainer = styled.section`
   width: 100%;
   flex-basis: 65%;
-`;
-
-const Track = styled.div`
-  display: flex;
-  align-items: center;
-  margin: 10px 0;
-  padding: 0 8px;
-  img {
-    height: 50px;
-    width: 50px;
-    margin-right: 20px;
-  }
-  .mr {
-    margin-right: 20px;
-  }
-  &:hover {
-    cursor: pointer;
-  }
-  &:hover {
-    & .track-name {
-      color: ${props => props.theme.colors.green};
-    }
-  }
-`;
-
-const TrackAlbum = styled.div`
-  color: grey;
-  font-size: 12px;
-  margin-top: 3px;
-`;
-
-const TrackTime = styled.div`
-  color: grey;
-  font-size: 14px;
-  margin-left: auto;
 `;
 
 const PlaylistContainer = styled.div`

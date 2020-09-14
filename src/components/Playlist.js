@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import { getPlaylist, playlistTracks } from "../spotify";
 import { numberWithCommas, msToMinutes } from "../utils/utilities";
+import { Track, TrackAlbum, TrackTime } from "../styles/Tracks";
 import Loading from "./Loading";
 import Axios from "axios";
 
@@ -35,41 +36,6 @@ const PlaylistCount = styled.div`
 const TracksContainer = styled.section`
   width: 100%;
   flex-basis: 60%;
-`;
-
-const Track = styled.div`
-  display: flex;
-  align-items: center;
-  margin: 10px 0;
-  padding: 0 8px;
-  img {
-    height: 50px;
-    width: 50px;
-    margin-right: 20px;
-  }
-  .mr {
-    margin-right: 20px;
-  }
-  &:hover {
-    cursor: pointer;
-  }
-  &:hover {
-    & .track-name {
-      color: ${props => props.theme.colors.green};
-    }
-  }
-`;
-
-const TrackAlbum = styled.div`
-  color: grey;
-  font-size: 12px;
-  margin-top: 3px;
-`;
-
-const TrackTime = styled.div`
-  color: grey;
-  font-size: 14px;
-  margin-left: auto;
 `;
 
 export default () => {
