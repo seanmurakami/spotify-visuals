@@ -4,6 +4,7 @@ import Axios from "axios";
 import { userInfo, userFollowedArtists, userTopTracks, userPlaylists, logout } from "../spotify";
 import User from "./User";
 import Artist from "./Artist";
+import FollowedArtists from "./FollowedArtists";
 import Playlist from "./Playlist";
 import styled from "styled-components";
 import Loading from "../components/Loading";
@@ -102,6 +103,9 @@ export default () => {
               </Route>
               <Route path="/artist/:id">
                 <Artist />
+              </Route>
+              <Route path="/artist">
+                <FollowedArtists />
               </Route>
               <Route path="/playlist/:id">
                 <Playlist />
