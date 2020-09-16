@@ -134,16 +134,16 @@ const Playlist = styled(Link)`
 export default ({ artists, tracks, playlists }) => {
   const renderArtists = () => {
     return (
-      <section>
-        <FollowFlex>
-          <Subheader count={artists.total} title="Following" />
-          <div>
-            <Button to="/artist">View All</Button>
-          </div>
-        </FollowFlex>
-        <ArtistsContainer>
-          {artists &&
-            artists.items.map((artist, i) => {
+      artists.items.length > 0 && (
+        <section>
+          <FollowFlex>
+            <Subheader count={artists.total} title="Following" />
+            <div>
+              <Button to="/artist">View All</Button>
+            </div>
+          </FollowFlex>
+          <ArtistsContainer>
+            {artists.items.map((artist, i) => {
               return (
                 <Artist key={i} to={`/artist/${artist.id}`}>
                   <img src={artist.images[0].url} alt="artist" />
@@ -154,8 +154,9 @@ export default ({ artists, tracks, playlists }) => {
                 </Artist>
               );
             })}
-        </ArtistsContainer>
-      </section>
+          </ArtistsContainer>
+        </section>
+      )
     );
   };
 

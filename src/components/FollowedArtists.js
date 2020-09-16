@@ -43,7 +43,7 @@ export default () => {
         })}
       </ArtistsContainer>
     ) : (
-      <div>hello</div>
+      <div>It looks like you're not following any artists.</div>
     );
   };
 
