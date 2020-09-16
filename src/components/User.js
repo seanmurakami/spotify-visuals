@@ -13,6 +13,36 @@ const Flex = styled.div`
   }
 `;
 
+const FollowFlex = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const Button = styled(Link)`
+  align-self: center;
+  background-color: ${({ theme: { colors } }) => colors.black};
+  border: 1px solid ${({ theme: { colors } }) => colors.white};
+  border-radius: 30px;
+  color: ${({ theme: { colors } }) => colors.white};
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 2px;
+  padding: 12px 20px;
+  transition: all 0.3s ease-in-out;
+  &:hover,
+  &:focus {
+    background-color: ${({ theme: { colors } }) => colors.white};
+    color: ${({ theme: { colors } }) => colors.black};
+  }
+  @media (max-width: 400px) {
+    padding: 6px 14px;
+  }
+  @media (max-width: 768px) {
+    margin-bottom: 20px;
+  }
+`;
+
 const ArtistsContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -105,7 +135,12 @@ export default ({ artists, tracks, playlists }) => {
   const renderArtists = () => {
     return (
       <section>
-        <Subheader count={artists.total} title="Following" />
+        <FollowFlex>
+          <Subheader count={artists.total} title="Following" />
+          <div>
+            <Button to="/artist">View All</Button>
+          </div>
+        </FollowFlex>
         <ArtistsContainer>
           {artists &&
             artists.items.map((artist, i) => {
