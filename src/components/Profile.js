@@ -23,11 +23,17 @@ const ProfileContainer = styled.div`
     font-size: 40px;
     letter-spacing: 1px;
     margin-bottom: 20px;
+    @media (max-width: 768px) {
+      font-size: 30px;
+    }
   }
   img {
     border-radius: 50%;
     max-width: 228px;
     width: 100%;
+    @media (max-width: 768px) {
+      max-width: 180px;
+    }
   }
 `;
 
