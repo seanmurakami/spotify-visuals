@@ -43,29 +43,25 @@ const Button = styled(Link)`
   }
 `;
 
-const ArtistsContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+const ArtistContainer = styled.ul`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-gap: 10px;
+  list-style-type: none;
+  padding: 0;
+  margin: 0 0 20px;
 `;
 
-const Artist = styled(Link)`
+const Artist = styled.li`
   border-radius: 10px;
   background-color: #2a2a2a;
-  display: flex;
-  flex-basis: 33%;
-  @media (max-width: 768px) {
-    flex-basis: 49%;
-  }
-  @media (max-width: 556px) {
-    flex-basis: 100%;
-  }
-  width: 100%;
-  align-items: center;
-  margin: 0 0 10px 0;
-  padding: 8px;
   letter-spacing: 0.8px;
   transition: all 300ms ease-in-out;
+  a {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+  }
   img {
     height: 40px;
     width: 40px;
@@ -142,19 +138,21 @@ export default ({ artists, tracks, playlists }) => {
               <Button to="/artist">View All</Button>
             </div>
           </FollowFlex>
-          <ArtistsContainer>
+          <ArtistContainer>
             {artists.items.map((artist, i) => {
               return (
-                <Artist key={i} to={`/artist/${artist.id}`}>
-                  <img src={artist.images[0].url} alt="artist" />
-                  <div>
-                    <div>{artist.name}</div>
-                    <FollowerCount>{numberWithCommas(artist.followers.total)} FOLLOWERS</FollowerCount>
-                  </div>
+                <Artist key={artist.id}>
+                  <Link to={`/artist/${artist.id}`}>
+                    <img src={artist.images[0].url} alt="artist" />
+                    <div>
+                      <div>{artist.name}</div>
+                      <FollowerCount>{numberWithCommas(artist.followers.total)} FOLLOWERS</FollowerCount>
+                    </div>
+                  </Link>
                 </Artist>
               );
             })}
-          </ArtistsContainer>
+          </ArtistContainer>
         </section>
       )
     );
