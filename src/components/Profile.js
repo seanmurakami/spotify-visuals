@@ -22,7 +22,7 @@ const ProfileContainer = styled.div`
   h1 {
     font-size: 40px;
     letter-spacing: 1px;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
   }
   img {
     border-radius: 50%;
@@ -49,16 +49,15 @@ const LogOutBtn = styled.button`
   border-radius: 30px;
   color: ${({ theme: { colors } }) => colors.white};
   font-weight: 700;
-  padding: 12px 24px;
   letter-spacing: 2px;
+  margin-bottom: 20px;
+  padding: 12px 24px;
   transition: all 0.3s ease-in-out;
   &:hover,
   &:focus {
+    cursor: pointer;
     background-color: ${({ theme: { colors } }) => colors.white};
     color: ${({ theme: { colors } }) => colors.black};
-  }
-  @media (max-width: 768px) {
-    margin-bottom: 20px;
   }
 `;
 
