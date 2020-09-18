@@ -4,18 +4,20 @@ import { Link } from "react-router-dom";
 import { userFollowedArtists } from "../spotify";
 import Loading from "./Loading";
 
-const ArtistsContainer = styled.section`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 40px;
+const ArtistsContainer = styled.ul`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  row-gap: 30px;
+  list-style-type: none;
+  padding: 0;
+  margin: 20px 0 0;
 `;
 
-const Artist = styled(Link)`
-  flex-basis: 20%;
-  margin-bottom: 20px;
+const Artist = styled.li`
   text-align: center;
+  a {
+    display: inline-block;
+  }
   img {
     border-radius: 5px;
   }
@@ -35,8 +37,10 @@ export default () => {
       <ArtistsContainer>
         {artists.items.map(artist => {
           return (
-            <Artist key={artist.id} to={`/artist/${artist.id}`}>
-              <img src={artist.images[0].url} alt={artist.name} height="200" width="200" />
+            <Artist key={artist.id}>
+              <Link to={`/artist/${artist.id}`}>
+                <img src={artist.images[0].url} alt={artist.name} height="200" width="200" />
+              </Link>
               <div>{artist.name}</div>
             </Artist>
           );
