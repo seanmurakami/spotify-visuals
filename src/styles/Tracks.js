@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Track = styled.div`
+export const Track = styled.a`
   display: flex;
   align-items: center;
   margin: 10px 0;

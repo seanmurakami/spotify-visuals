@@ -165,7 +165,7 @@ export default ({ artists, tracks, playlists }) => {
         {tracks &&
           tracks.map((track, i) => {
             return (
-              <Track key={i}>
+              <Track key={i} href={track.external_urls.spotify} target="_blank">
                 <img src={track.album.images[0].url} alt={track.name} />
                 <div className="mr">
                   <div className="track-name">{track.name}</div>
