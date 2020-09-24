@@ -82,6 +82,8 @@ export const userInfo = () => axios.get("https://api.spotify.com/v1/me");
 
 export const userFollowedArtists = (limit = 12) => axios.get(`https://api.spotify.com/v1/me/following?type=artist&limit=${limit}`);
 
+export const nextArtists = url => axios.get(url);
+
 export const userTopTracks = () => axios.get("https://api.spotify.com/v1/me/top/tracks?limit=30");
 
 export const userPlaylists = () => axios.get("https://api.spotify.com/v1/me/playlists?limit=50");

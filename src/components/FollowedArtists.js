@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { userFollowedArtists } from "../spotify";
+import { userFollowedArtists, nextArtists } from "../spotify";
 import Loading from "./Loading";
 
 const ArtistsContainer = styled.ul`
@@ -13,7 +13,8 @@ const ArtistsContainer = styled.ul`
   grid-gap: 20px;
   list-style-type: none;
   padding: 0;
-  margin: 20px 0 0;
+  margin-top: 20px;
+  margin-bottom: 20px;
 `;
 
 const Artist = styled.li`
@@ -32,6 +33,27 @@ const Artist = styled.li`
   }
 `;
 
+const SeeMore = styled.div`
+  text-align: center;
+  button {
+    background-color: ${({ theme: { colors } }) => colors.black};
+    border: 1px solid ${({ theme: { colors } }) => colors.white};
+    border-radius: 30px;
+    color: ${({ theme: { colors } }) => colors.white};
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+    padding: 12px 40px;
+    transition: all 0.3s ease-in-out;
+    &:hover,
+    &:focus {
+      cursor: pointer;
+      background-color: ${({ theme: { colors } }) => colors.white};
+      color: ${({ theme: { colors } }) => colors.black};
+    }
+  }
+`;
+
 export default () => {
   const [artists, setArtists] = useState(null);
 
@@ -41,20 +63,36 @@ export default () => {
     });
   }, []);
 
+  const next = async () => {
+    const moreArtists = await nextArtists(artists.next);
+    setArtists(prev => {
+      const artists = [...prev.items, ...moreArtists.data.artists.items];
+      moreArtists.data.artists.items = artists;
+      return moreArtists.data.artists;
+    });
+  };
+
   const renderArtists = () => {
     return artists ? (
-      <ArtistsContainer>
-        {artists.items.map(artist => {
-          return (
-            <Artist key={artist.id}>
-              <Link to={`/artist/${artist.id}`}>
-                <img src={artist.images[0].url} alt={artist.name} />
-              </Link>
-              <div>{artist.name}</div>
-            </Artist>
-          );
-        })}
-      </ArtistsContainer>
+      <>
+        <ArtistsContainer>
+          {artists.items.map(artist => {
+            return (
+              <Artist key={artist.id}>
+                <Link to={`/artist/${artist.id}`}>
+                  <img src={artist.images[0].url} alt={artist.name} />
+                </Link>
+                <div>{artist.name}</div>
+              </Artist>
+            );
+          })}
+        </ArtistsContainer>
+        {artists.next && (
+          <SeeMore>
+            <button onClick={next}>SEE MORE</button>
+          </SeeMore>
+        )}
+      </>
     ) : (
       <div>It looks like you're not following any artists.</div>
     );
