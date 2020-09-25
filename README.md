@@ -8,6 +8,8 @@ Web application utilizing:
 - [Express](https://expressjs.com/)
 - [Styled Components](https://www.styled-components.com/)
 
+![spotify-visuals](https://user-images.githubusercontent.com/38697885/94314185-e135c080-ff34-11ea-8de4-2c9a33c21a5e.gif)
+
 ## Usage
 
 Make sure to register a Spotify application to get a client id and client secret.  Add ```http://localhost:8888/callback``` as the redirect URI in the Spotify developer app settings.
