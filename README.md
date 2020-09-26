@@ -1,6 +1,6 @@
 # Spotify Visuals
 
-Web application utilizing:
+Spotify Visuals utilizes the Spotify Web API to view your personalized top tracks, playlists, and artists that you follow.  Built using:
 
 - [Create React App](https://github.com/facebook/create-react-app)
 - [React Router](https://reactrouter.com/web/guides/quick-start)
