@@ -127,7 +127,7 @@ const Playlist = styled(Link)`
   }
 `;
 
-export default ({ artists, tracks, playlists }) => {
+export default ({ artists, tracks, playlists, recent }) => {
   const renderArtists = () => {
     return (
       artists.items.length > 0 && (
@@ -161,11 +161,25 @@ export default ({ artists, tracks, playlists }) => {
   const renderTracks = () => {
     return (
       <TracksContainer>
+        <h2>Recently Played</h2>
+        {recent &&
+          recent.map(({ track }) => {
+            return (
+              <Track key={track.id} href={track.external_urls.spotify} target="_blank">
+                <img src={track.album.images[0].url} alt={track.name} />
+                <div className="mr">
+                  <div className="track-name">{track.name}</div>
+                  <TrackAlbum>{track.album.name}</TrackAlbum>
+                </div>
+                <TrackTime>{msToMinutes(track.duration_ms)}</TrackTime>
+              </Track>
+            );
+          })}
         <h2>Top Tracks</h2>
         {tracks &&
-          tracks.map((track, i) => {
+          tracks.map(track => {
             return (
-              <Track key={i} href={track.external_urls.spotify} target="_blank">
+              <Track key={track.id} href={track.external_urls.spotify} target="_blank">
                 <img src={track.album.images[0].url} alt={track.name} />
                 <div className="mr">
                   <div className="track-name">{track.name}</div>
