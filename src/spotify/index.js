@@ -86,6 +86,8 @@ export const nextArtists = url => axios.get(url);
 
 export const userTopTracks = () => axios.get("https://api.spotify.com/v1/me/top/tracks?limit=30");
 
+export const recentlyPlayedTracks = () => axios.get("https://api.spotify.com/v1/me/player/recently-played?limit=15");
+
 export const userPlaylists = () => axios.get("https://api.spotify.com/v1/me/playlists?limit=50");
 
 export const artistInfo = artistId => axios.get(`https://api.spotify.com/v1/artists/${artistId}`);

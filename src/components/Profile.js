@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Axios from "axios";
-import { userInfo, userFollowedArtists, userTopTracks, userPlaylists, logout } from "../spotify";
+import { userInfo, userFollowedArtists, userTopTracks, userPlaylists, recentlyPlayedTracks, logout } from "../spotify";
 import User from "./User";
 import Artist from "./Artist";
 import FollowedArtists from "./FollowedArtists";
@@ -72,14 +72,16 @@ export default () => {
   const [artists, setArtists] = useState(null);
   const [tracks, setTracks] = useState(null);
   const [playlists, setPlaylists] = useState(null);
+  const [recentTracks, setRecentTracks] = useState(null);
 
   useEffect(() => {
-    Axios.all([userInfo(), userFollowedArtists(), userTopTracks(), userPlaylists()]).then(
-      Axios.spread((user, followedArtists, tracks, playlists) => {
+    Axios.all([userInfo(), userFollowedArtists(), userTopTracks(), userPlaylists(), recentlyPlayedTracks()]).then(
+      Axios.spread((user, followedArtists, tracks, playlists, recent) => {
         setUser(user.data);
         setArtists(followedArtists.data.artists);
         setTracks(tracks.data.items);
         setPlaylists(playlists.data);
+        setRecentTracks(recent.data.items);
       })
     );
   }, []);
@@ -104,7 +106,7 @@ export default () => {
           <Router>
             <Switch>
               <Route exact path="/">
-                <User artists={artists} tracks={tracks} playlists={playlists} />
+                <User artists={artists} tracks={tracks} playlists={playlists} recent={recentTracks} />
               </Route>
               <Route path="/artist/:id">
                 <Artist />
