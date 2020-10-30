@@ -49,7 +49,6 @@ export default () => {
         Axios.spread((playlistInfo, playlistTracks) => {
           setPlaylist(playlistInfo.data);
           setTracks(playlistTracks.data);
-          console.log(playlistTracks);
         })
       );
     }
@@ -62,8 +61,14 @@ export default () => {
         {tracks &&
           tracks.items.map(({ track }) => {
             return (
-              <Track key={track.id} href={track.external_urls.spotify} target="_blank">
-                {track.album.images.length > 0 && <img src={track.album.images[0].url} alt={track.name} />}
+              <Track
+                key={track.id}
+                href={track.external_urls.spotify}
+                target="_blank"
+              >
+                {track.album.images.length > 0 && (
+                  <img src={track.album.images[0].url} alt={track.name} />
+                )}
                 <div className="mr">
                   <div className="track-name">{track.name}</div>
                   <TrackAlbum>{track.album.name}</TrackAlbum>
@@ -79,7 +84,14 @@ export default () => {
   return tracks ? (
     <Flex>
       <PlaylistHeader>
-        {playlist.images.length > 0 && <img src={playlist.images[0].url} alt={playlist.name} height="180" width="180" />}
+        {playlist.images.length > 0 && (
+          <img
+            src={playlist.images[0].url}
+            alt={playlist.name}
+            height="180"
+            width="180"
+          />
+        )}
         <h2>{playlist.name}</h2>
         <PlaylistCount>Total: {numberWithCommas(tracks.total)}</PlaylistCount>
       </PlaylistHeader>
