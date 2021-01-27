@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { userFollowedArtists, nextArtists } from "../spotify";
+import { userFollowedArtists } from "../spotify";
 import Loading from "./Loading";
+import Axios from "axios";
 
 const ArtistsContainer = styled.ul`
   display: grid;
@@ -64,7 +65,7 @@ export default () => {
   }, []);
 
   const next = async () => {
-    const moreArtists = await nextArtists(artists.next);
+    const moreArtists = await Axios.get(artists.next);
     setArtists(prev => {
       const artists = [...prev.items, ...moreArtists.data.artists.items];
       moreArtists.data.artists.items = artists;

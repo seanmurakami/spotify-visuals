@@ -18,12 +18,8 @@ const getLocalRefreshToken = () => window.localStorage.getItem("spotify-refresh-
 function getToken() {
   const { error, access_token, refresh_token } = getHashParams();
 
-  if (error) {
+  if (error || Date.now() - getExpirationTime() > 3600000) {
     console.error(error);
-    refreshToken();
-  }
-
-  if (Date.now() - getExpirationTime() > 3600000) {
     refreshToken();
   }
 
@@ -68,7 +64,7 @@ axios.interceptors.request.use(
   function (config) {
     const headers = {
       Authorization: `Bearer ${userToken}`,
-      "Content-Type": "application/json",
+      "Content-Type": "application/json"
     };
     config.headers = headers;
     return config;
@@ -81,8 +77,6 @@ axios.interceptors.request.use(
 export const userInfo = () => axios.get("https://api.spotify.com/v1/me");
 
 export const userFollowedArtists = (limit = 12) => axios.get(`https://api.spotify.com/v1/me/following?type=artist&limit=${limit}`);
-
-export const nextArtists = url => axios.get(url);
 
 export const userTopTracks = () => axios.get("https://api.spotify.com/v1/me/top/tracks?limit=30");
 
