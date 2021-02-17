@@ -52,7 +52,7 @@ const LoginBtn = styled.a`
   }
 `;
 
-export default () => {
+export const Login = () => {
   return (
     <LoginContainer>
       <Gradient />

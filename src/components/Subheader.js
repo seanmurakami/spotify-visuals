@@ -18,7 +18,7 @@ const Count = styled.div`
   margin-left: 6px;
 `;
 
-const Subheader = ({ title, count }) => {
+export const Subheader = ({ title, count }) => {
   return (
     <Flex>
       <h2>{title}</h2>
@@ -26,5 +26,3 @@ const Subheader = ({ title, count }) => {
     </Flex>
   );
 };
-
-export default Subheader;

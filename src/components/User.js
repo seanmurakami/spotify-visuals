@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { numberWithCommas, msToMinutes } from "../utils/utilities";
 import { Track, TrackAlbum, TrackTime } from "../styles/Tracks";
 import styled from "styled-components";
-import Subheader from "./Subheader";
+import { Subheader } from "./Subheader";
 
 const Flex = styled.div`
   display: flex;

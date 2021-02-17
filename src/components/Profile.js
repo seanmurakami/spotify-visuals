@@ -16,7 +16,7 @@ const Container = styled.div`
   padding: 50px 20px;
 `;
 
-export default () => {
+export const Profile = () => {
   const [user, setUser] = useState(null);
   const [artists, setArtists] = useState(null);
   const [tracks, setTracks] = useState(null);
