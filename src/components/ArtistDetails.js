@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import { artistInfo, artistTopTracks } from "../spotify";
-import { Track, TrackAlbum, TrackTime } from "../styles/Tracks";
-import { numberWithCommas, msToMinutes } from "../utils/utilities";
+import { numberWithCommas } from "../utils/utilities";
+import { TopTracks } from "./TopTracks";
 import Loading from "./Loading";
 import Axios from "axios";
 
@@ -36,12 +36,7 @@ const Followers = styled.div`
   font-size: 14px;
 `;
 
-const TracksContainer = styled.section`
-  width: 100%;
-  flex-basis: 60%;
-`;
-
-export default () => {
+export const ArtistDetails = () => {
   const { id } = useParams();
   const [artist, setArtist] = useState(null);
   const [topTracks, setTopTracks] = useState(null);
@@ -57,27 +52,6 @@ export default () => {
     }
   }, [id]);
 
-  const renderTracks = () => {
-    return (
-      <>
-        <h2>Top Tracks</h2>
-        {topTracks &&
-          topTracks.map((track, i) => {
-            return (
-              <Track key={i} href={track.external_urls.spotify} target="_blank">
-                <img src={track.album.images[0].url} alt={track.name} />
-                <div className="mr">
-                  <div className="track-name">{track.name}</div>
-                  <TrackAlbum>{track.album.name}</TrackAlbum>
-                </div>
-                <TrackTime>{msToMinutes(track.duration_ms)}</TrackTime>
-              </Track>
-            );
-          })}
-      </>
-    );
-  };
-
   return artist ? (
     <Flex>
       <ArtistHeader>
@@ -85,7 +59,7 @@ export default () => {
         <h2>{artist.name}</h2>
         <Followers>Followers: {numberWithCommas(artist.followers.total)}</Followers>
       </ArtistHeader>
-      <TracksContainer>{renderTracks()}</TracksContainer>
+      <TopTracks tracks={topTracks} />
     </Flex>
   ) : (
     <Loading />

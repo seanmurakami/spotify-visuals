@@ -127,7 +127,7 @@ const Playlist = styled(Link)`
   }
 `;
 
-export default ({ artists, tracks, playlists, recent }) => {
+export const User = ({ artists, tracks, playlists, recent }) => {
   const renderArtists = () => {
     return (
       artists.items.length > 0 && (
