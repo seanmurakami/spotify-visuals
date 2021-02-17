@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { artistInfo, artistTopTracks } from "../spotify";
 import { numberWithCommas } from "../utils/utilities";
 import { TopTracks } from "./TopTracks";
-import Loading from "./Loading";
+import { Loading } from "./Loading";
 import Axios from "axios";
 
 const Flex = styled.div`
@@ -19,7 +19,7 @@ const Flex = styled.div`
   }
 `;
 
-const ArtistHeader = styled.div`
+const ArtistHeader = styled.header`
   margin-right: 50px;
   margin-bottom: 20px;
   h2 {

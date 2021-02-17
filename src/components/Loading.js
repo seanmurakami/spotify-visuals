@@ -28,7 +28,7 @@ const Dot = styled.div`
   animation-delay: ${props => props.delay};
 `;
 
-export default ({ full }) => {
+export const Loading = ({ full }) => {
   return (
     <Container full={full}>
       <Dot delay="0s" />

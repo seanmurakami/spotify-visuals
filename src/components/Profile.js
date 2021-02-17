@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Axios from "axios";
+import styled from "styled-components";
 import { userInfo, userFollowedArtists, userTopTracks, userPlaylists, recentlyPlayedTracks } from "../spotify";
 import { Header } from "./Header";
 import { User } from "./User";
 import { ArtistDetails } from "./ArtistDetails";
-import FollowedArtists from "./FollowedArtists";
-import Playlist from "./Playlist";
-import styled from "styled-components";
-import Loading from "../components/Loading";
+import { FollowedArtists } from "./FollowedArtists";
+import { Playlist } from "./Playlist";
+import { Loading } from "../components/Loading";
 
 const Container = styled.div`
   max-width: 1000px;

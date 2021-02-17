@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { userFollowedArtists } from "../spotify";
-import Loading from "./Loading";
+import { Loading } from "./Loading";
 import Axios from "axios";
 
 const ArtistsContainer = styled.ul`
@@ -55,7 +55,7 @@ const SeeMore = styled.div`
   }
 `;
 
-export default () => {
+export const FollowedArtists = () => {
   const [artists, setArtists] = useState(null);
 
   useEffect(() => {
