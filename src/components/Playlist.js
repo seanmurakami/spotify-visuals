@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import { getPlaylist, playlistTracks } from "../spotify";
-import { numberWithCommas, msToMinutes } from "../utils/utilities";
-import { Track, TrackAlbum, TrackTime } from "../styles/Tracks";
+import { PlaylistTracks } from "./PlaylistTracks";
+import { numberWithCommas } from "../utils/utilities";
 import { Loading } from "./Loading";
 import Axios from "axios";
 
@@ -54,27 +54,6 @@ export const Playlist = () => {
     }
   }, [id]);
 
-  const renderTracks = () => {
-    return (
-      <>
-        <h2>Tracks</h2>
-        {tracks &&
-          tracks.items.map(({ track }) => {
-            return (
-              <Track key={track.id} href={track.external_urls.spotify} target="_blank">
-                {track.album.images.length > 0 && <img src={track.album.images[0].url} alt={track.name} />}
-                <div className="mr">
-                  <div className="track-name">{track.name}</div>
-                  <TrackAlbum>{track.album.name}</TrackAlbum>
-                </div>
-                <TrackTime>{msToMinutes(track.duration_ms)}</TrackTime>
-              </Track>
-            );
-          })}
-      </>
-    );
-  };
-
   return tracks ? (
     <Flex>
       <PlaylistHeader>
@@ -82,7 +61,9 @@ export const Playlist = () => {
         <h2>{playlist.name}</h2>
         <PlaylistCount>Total: {numberWithCommas(tracks.total)}</PlaylistCount>
       </PlaylistHeader>
-      <TracksContainer>{renderTracks()}</TracksContainer>
+      <TracksContainer>
+        <PlaylistTracks tracks={tracks} />
+      </TracksContainer>
     </Flex>
   ) : (
     <Loading />
