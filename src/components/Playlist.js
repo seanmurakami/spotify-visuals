@@ -19,7 +19,8 @@ const Flex = styled.div`
   }
 `;
 
-const PlaylistHeader = styled.div`
+const PlaylistHeader = styled.header`
+  flex: 1;
   margin-right: 50px;
   margin-bottom: 20px;
   h2 {
@@ -35,7 +36,7 @@ const PlaylistCount = styled.div`
 
 const TracksContainer = styled.section`
   width: 100%;
-  flex-basis: 60%;
+  flex: 2;
 `;
 
 export const Playlist = () => {
