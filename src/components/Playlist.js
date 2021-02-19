@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import { getPlaylist, playlistTracks } from "../spotify";
-import { numberWithCommas, msToMinutes } from "../utils/utilities";
-import { Track, TrackAlbum, TrackTime } from "../styles/Tracks";
+import { PlaylistTracks } from "./PlaylistTracks";
+import { numberWithCommas } from "../utils/utilities";
 import { Loading } from "./Loading";
 import Axios from "axios";
 
@@ -19,7 +19,8 @@ const Flex = styled.div`
   }
 `;
 
-const PlaylistHeader = styled.div`
+const PlaylistHeader = styled.header`
+  flex: 1;
   margin-right: 50px;
   margin-bottom: 20px;
   h2 {
@@ -35,56 +36,45 @@ const PlaylistCount = styled.div`
 
 const TracksContainer = styled.section`
   width: 100%;
-  flex-basis: 60%;
+  flex: 2;
 `;
 
 export const Playlist = () => {
   const { id } = useParams();
   const [playlist, setPlaylist] = useState(null);
-  const [tracks, setTracks] = useState(null);
+  const [tracks, setTracks] = useState([]);
+  const [total, setTotal] = useState();
+  const [loading, setLoading] = useState(true);
+
+  const [searchValue, setSearchValue] = useState("");
+
+  const filteredTracks = tracks.filter(({ track }) => track.name.toLowerCase().includes(searchValue.toLowerCase()));
 
   useEffect(() => {
     if (id) {
       Axios.all([getPlaylist(id), playlistTracks(id)]).then(
         Axios.spread((playlistInfo, playlistTracks) => {
           setPlaylist(playlistInfo.data);
-          setTracks(playlistTracks.data);
+          setTracks(playlistTracks.data.items);
+          setTotal(playlistTracks.data.total);
+          setLoading(false);
         })
       );
     }
   }, [id]);
 
-  const renderTracks = () => {
-    return (
-      <>
-        <h2>Tracks</h2>
-        {tracks &&
-          tracks.items.map(({ track }) => {
-            return (
-              <Track key={track.id} href={track.external_urls.spotify} target="_blank">
-                {track.album.images.length > 0 && <img src={track.album.images[0].url} alt={track.name} />}
-                <div className="mr">
-                  <div className="track-name">{track.name}</div>
-                  <TrackAlbum>{track.album.name}</TrackAlbum>
-                </div>
-                <TrackTime>{msToMinutes(track.duration_ms)}</TrackTime>
-              </Track>
-            );
-          })}
-      </>
-    );
-  };
+  if (loading) return <Loading />;
 
-  return tracks ? (
+  return (
     <Flex>
       <PlaylistHeader>
         {playlist.images.length > 0 && <img src={playlist.images[0].url} alt={playlist.name} height="180" width="180" />}
         <h2>{playlist.name}</h2>
-        <PlaylistCount>Total: {numberWithCommas(tracks.total)}</PlaylistCount>
+        <PlaylistCount>Total: {numberWithCommas(total)}</PlaylistCount>
       </PlaylistHeader>
-      <TracksContainer>{renderTracks()}</TracksContainer>
+      <TracksContainer>
+        <PlaylistTracks tracks={filteredTracks} value={searchValue} setSearch={setSearchValue} />
+      </TracksContainer>
     </Flex>
-  ) : (
-    <Loading />
   );
 };
