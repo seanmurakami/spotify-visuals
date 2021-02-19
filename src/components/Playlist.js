@@ -41,31 +41,39 @@ const TracksContainer = styled.section`
 export const Playlist = () => {
   const { id } = useParams();
   const [playlist, setPlaylist] = useState(null);
-  const [tracks, setTracks] = useState(null);
+  const [tracks, setTracks] = useState([]);
+  const [total, setTotal] = useState();
+  const [loading, setLoading] = useState(true);
+
+  const [searchValue, setSearchValue] = useState("");
+
+  const filteredTracks = tracks.filter(({ track }) => track.name.toLowerCase().includes(searchValue.toLowerCase()));
 
   useEffect(() => {
     if (id) {
       Axios.all([getPlaylist(id), playlistTracks(id)]).then(
         Axios.spread((playlistInfo, playlistTracks) => {
           setPlaylist(playlistInfo.data);
-          setTracks(playlistTracks.data);
+          setTracks(playlistTracks.data.items);
+          setTotal(playlistTracks.data.total);
+          setLoading(false);
         })
       );
     }
   }, [id]);
 
-  return tracks ? (
+  if (loading) return <Loading />;
+
+  return (
     <Flex>
       <PlaylistHeader>
         {playlist.images.length > 0 && <img src={playlist.images[0].url} alt={playlist.name} height="180" width="180" />}
         <h2>{playlist.name}</h2>
-        <PlaylistCount>Total: {numberWithCommas(tracks.total)}</PlaylistCount>
+        <PlaylistCount>Total: {numberWithCommas(total)}</PlaylistCount>
       </PlaylistHeader>
       <TracksContainer>
-        <PlaylistTracks tracks={tracks} />
+        <PlaylistTracks tracks={filteredTracks} value={searchValue} setSearch={setSearchValue} />
       </TracksContainer>
     </Flex>
-  ) : (
-    <Loading />
   );
 };
