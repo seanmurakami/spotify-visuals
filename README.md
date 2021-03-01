@@ -28,11 +28,7 @@ CLIENT_SECRET=myclientsecret12345
 REDIRECT_URI=http://localhost:8888/callback
 FRONTEND_URI=http://localhost:3000
 ```
-Run the app server
-```
-yarn start
-```
-Start the dev environment
+Run the app server and start dev environment
 ```
 yarn dev
 ```
